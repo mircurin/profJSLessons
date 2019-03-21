@@ -4,5 +4,13 @@
 *.tif
 *.png
 *.psd
-.idea
+idea/
 *.iml
+*.ttf
+packegesImport/
+*.css.map
+*.scss
+*.svg
+*.txt
+fontsStyle.css
+
