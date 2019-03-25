@@ -1,34 +1,49 @@
+$catalog = document.getElementById("catalog");
 
-const goods = [
-    { name: "Shirt", price: 150, quantity: 1, size: "L", color: "red" },
-    { name: "Socks", price: 50, quantity: 1, size: "M", color: "blue" },
-    { name: "Jacket", price: 350, quantity: 1, size: "XL", color: "green" },
-    { name: "Jacket", price: 250, quantity: 1, size: "XXX", color: "yellow" },
-];
+class Item {
+    constructor(name, price, quantity, size, color) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.size = size;
+        this.color = color;
+    }
 
-let $catalog = document.getElementById("catalog");
+    render(name, price, quantity, size, color) {
 
-const renderGoodsItem = (name, price, quantity, size, color) => {
+        let $template = document.getElementById("template").children[0].cloneNode(true);
 
-    //return `<div class="goods-item"><h3>${title}</h3><p>${price}</p></div>`;
+        $template.querySelector(".productName").textContent = name;
+        $template.querySelector(".productPrice").textContent = price;
+        $template.querySelector(".productQuantity").textContent = quantity;
+        $template.querySelector(".productSize").textContent = size;
+        $template.querySelector(".productColor").textContent = color;
+        return $template;
+    }
+}
 
-    let $template = document.getElementById("template").children[0].cloneNode(true);
+class ItemsList extends Item{
+    constructor() {
+        super();
+        this.items = [];
+    }
 
-    $template.querySelector(".productName").textContent = name;
-    $template.querySelector(".productPrice").textContent = price;
-    $template.querySelector(".productQuantity").textContent = quantity;
-    $template.querySelector(".productSize").textContent = size;
-    $template.querySelector(".productColor").textContent = color;
+    fetchItems() {
+        this.items = [
+            { name: "Shirt", price: 150, quantity: 1, size: "L", color: "redddd" },
+            { name: "Socks", price: 50, quantity: 1, size: "M", color: "blue" },
+            { name: "Jacket", price: 350, quantity: 1, size: "XL", color: "green" },
+            { name: "Jacket", price: 250, quantity: 1, size: "XXX", color: "yellow" },
+        ];
 
-    return $template;
+        this.items = this.items.map(item => new Item(item.name, item.price, item.quantity, item.size, item.color));
+    }
 
-};
+    render() {
+        this.items.forEach(item => $catalog.appendChild(super.render(item.name, item.price, item.quantity, item.size, item.color)));
+    }
+}
 
-const renderGoodsList = (list) => {
-
-    //document.querySelector('.goods-list').innerHTML = list.map(item => renderGoodsItem(item.name, item.price)).join(" ");
-
-    list.forEach(item => $catalog.appendChild(renderGoodsItem(item.name, item.price, item.quantity, item.size, item.color)));
-};
-
-renderGoodsList(goods);
+const items = new ItemsList();
+items.fetchItems();
+items.render();
