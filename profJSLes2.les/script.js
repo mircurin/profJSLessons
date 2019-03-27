@@ -1,4 +1,5 @@
 $catalog = document.getElementById("catalog");
+$cart = document.getElementById("headerCart");
 
 class Item {
     constructor(name, price, quantity, size, color) {
@@ -30,9 +31,9 @@ class ItemsList extends Item{
 
     fetchItems() {
         this.items = [
-            { name: "Shirt", price: 150, quantity: 1, size: "L", color: "redddd" },
+            { name: "Shirt", price: 150, quantity: 2, size: "L", color: "redddd" },
             { name: "Socks", price: 50, quantity: 1, size: "M", color: "blue" },
-            { name: "Jacket", price: 350, quantity: 1, size: "XL", color: "green" },
+            { name: "Jacket", price: 350, quantity: 2, size: "XL", color: "green" },
             { name: "Jacket", price: 250, quantity: 1, size: "XXX", color: "yellow" },
         ];
 
@@ -42,8 +43,15 @@ class ItemsList extends Item{
     render() {
         this.items.forEach(item => $catalog.appendChild(super.render(item.name, item.price, item.quantity, item.size, item.color)));
     }
+
+    total() {
+        return this.items.reduce((acc, item) => {
+            return acc + (item.price * item.quantity);
+        }, 0);
+    }//Считаем общюю сумма Итого
 }
 
 const items = new ItemsList();
 items.fetchItems();
 items.render();
+$cart.querySelector(".cartTotal").textContent = "Итого: " + items.total();//Выводим общюю Итого
