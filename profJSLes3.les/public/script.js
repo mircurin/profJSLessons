@@ -6,7 +6,7 @@ $cart = document.getElementById("headerCart");
 
 function sendRequest(url, callback) {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', url); // настройка запроса
+    xhr.open("GET", url); // настройка запроса
     xhr.send();
 
     xhr.onreadystatechange = () => {
@@ -54,16 +54,15 @@ class ItemsList extends Item {
     }
 
     render() {
-        //console.log(this.items);
         this.items.forEach(item => $catalog.appendChild(super.render(item.name, item.price, item.quantity, item.size, item.color)));
         $cart.querySelector(".cartTotal").textContent = "Итого: " + items.total();//Выводим общюю Итого
     }
 
     total() {
-        return this.items.reduce((acc, item) => {
+        return this.items.reduce((acc, item) => {//Считаем общюю сумму Итого
             return acc + (item.price * item.quantity);
         }, 0);
-    }//Считаем общюю сумму Итого
+    }
 }
 
 const items = new ItemsList();
