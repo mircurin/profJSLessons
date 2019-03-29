@@ -4,23 +4,16 @@ $catalog = document.getElementById("catalog");
 $cart = document.getElementById("headerCart");
 
 
-function sendRequest(url) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url); // настройка запроса
-        xhr.send();
+function sendRequest(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url); // настройка запроса
+    xhr.send();
 
-        xhr.onreadystatechange = () => {
-            if(xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.responseText));
-                } else {
-                    reject();
-                }
-            }
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState === XMLHttpRequest.DONE) {
+            callback(JSON.parse(xhr.responseText));
         }
-    });
-
+    };
 }
 
 class Item {
@@ -51,9 +44,12 @@ class ItemsList extends Item {
         this.items = [];
     }
 
-    fetchItems() {
-        return sendRequest(`${API_URL}/products.json`).then((items) => {
+    fetchItems(callback) {
+        sendRequest(`${API_URL}/products.json`, (items) => {
+
             this.items = items.map(item => new Item(item.name, item.price, item.quantity, item.size, item.color));
+            callback();
+
         });
     }
 
@@ -71,7 +67,7 @@ class ItemsList extends Item {
 
 const items = new ItemsList();
 
-items.fetchItems().then(() => {
+items.fetchItems(() => {
     items.render();
 });
 
