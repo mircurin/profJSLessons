@@ -1,5 +1,20 @@
+const API_URL = "http://localhost:3000";
+
 $catalog = document.getElementById("catalog");
 $cart = document.getElementById("headerCart");
+
+
+function sendRequest(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url); // настройка запроса
+    xhr.send();
+
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState === XMLHttpRequest.DONE) {
+            callback(JSON.parse(xhr.responseText));
+        }
+    };
+}
 
 class Item {
     constructor(name, price, quantity, size, color) {
@@ -23,35 +38,36 @@ class Item {
     }
 }
 
-class ItemsList extends Item{
+class ItemsList extends Item {
     constructor() {
         super();
         this.items = [];
     }
 
-    fetchItems() {
-        this.items = [
-            { name: "Shirt", price: 150, quantity: 2, size: "L", color: "redddd" },
-            { name: "Socks", price: 50, quantity: 1, size: "M", color: "blue" },
-            { name: "Jacket", price: 350, quantity: 2, size: "XL", color: "green" },
-            { name: "Jacket", price: 250, quantity: 1, size: "XXX", color: "yellow" },
-        ];
+    fetchItems(callback) {
+        sendRequest(`${API_URL}/products.json`, (items) => {
 
-        this.items = this.items.map(item => new Item(item.name, item.price, item.quantity, item.size, item.color));
+            this.items = items.map(item => new Item(item.name, item.price, item.quantity, item.size, item.color));
+            callback();
+
+        });
     }
 
     render() {
         this.items.forEach(item => $catalog.appendChild(super.render(item.name, item.price, item.quantity, item.size, item.color)));
+        $cart.querySelector(".cartTotal").textContent = "Итого: " + items.total();//Выводим общюю Итого
     }
 
     total() {
-        return this.items.reduce((acc, item) => {
+        return this.items.reduce((acc, item) => {//Считаем общюю сумму Итого
             return acc + (item.price * item.quantity);
         }, 0);
-    }//Считаем общюю сумму Итого
+    }
 }
 
 const items = new ItemsList();
-items.fetchItems();
-items.render();
-$cart.querySelector(".cartTotal").textContent = "Итого: " + items.total();//Выводим общюю Итого
+
+items.fetchItems(() => {
+    items.render();
+});
+
