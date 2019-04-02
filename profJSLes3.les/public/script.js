@@ -5,7 +5,8 @@ $cart = document.getElementById("headerCart");
 
 
 function sendRequest(url) {
-    return new Promise((resolve, reject) => {
+    return fetch(url).then((response) => response.json());
+    /*return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url); // настройка запроса
         xhr.send();
@@ -19,7 +20,7 @@ function sendRequest(url) {
                 }
             }
         }
-    });
+    });*/
 
 }
 
