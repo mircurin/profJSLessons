@@ -1,1 +1,8 @@
-{}
+{
+  "products": [
+    { "id": 1, "name": "Shirt", "price": 150, "quantity": 2, "size": "L", "color": "redddd" },
+    { "id": 2, "name": "Socks", "price": 50, "quantity": 1, "size": "M", "color": "blue" },
+    { "id": 3, "name": "Jacket", "price": 350, "quantity": 2, "size": "XL", "color": "green" },
+    { "id": 4, "name": "Jacket", "price": 250, "quantity": 1, "size": "XXX", "color": "yellow" }
+  ]
+}

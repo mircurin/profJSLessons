@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div id="app">
 <header class="header">
     <div class="container headerInside">
         <div class="logo">
@@ -19,7 +20,7 @@
                 <i class="fas fa-caret-down"></i>
             </div>
             <input class="headerSearch" placeholder="Search for Item..." type="text">
-            <button>
+            <button @click="handleSearchClick">
                 <i class="fas fa-search"></i>
             </button>
         </form>
@@ -52,28 +53,31 @@
     <button class="cart-button accountBtn" type="button">Корзина</button>
     <div class="cartTotal" id="cartTotal"></div>
 </div>
+
 <main>
     <div class="goods-list"></div>
 </main>
 
 <!--**************************************************-->
-<div id="template" style="display: none;">
-    <section class="shoppingGridRow">
+<div id="template">
+    <section v-for="item in filteredItems" class="item shoppingGridRow">
         <div class="product">
             <img src="images/product1.jpg" alt="">
             <div class="productDetails">
-                <h2 class="productName"></h2>
+                <h2 class="productName">{{item.name}}</h2>
                 <div class="productColor">
                     <span class="productParam">Color:</span>
+                    {{item.color}}
                 </div>
                 <div class="productSize">
                     <span class="productParam">Size:</span>
+                    {{item.size}}
                 </div>
             </div>
         </div>
-        <div class="productPrice"></div>
+        <div class="productPrice">{{item.price}}</div>
         <div class="productQty">
-            <input class="productQuantity" type="text" value="2">
+            <input class="productQuantity" type="text" value="1">
         </div>
         <div class="productShipping">FREE</div>
         <div class="productSubtotal">$300</div>
@@ -82,8 +86,12 @@
     </div>
     </section>
 </div>
-<div id="catalog" class="container shoppingCart"></div>
-
+<!--<div id="catalog" class="container shoppingCart">
+    <div v-for="item in filteredItems" class="item">
+        <h2>{{item.name}}</h2>
+        <span>{{item.price}}</span>
+    </div>
+</div>-->
 <!--**************************************************-->
 <div class="bodySubscribe">
     <div class="container bodySubscribeContainer">
@@ -169,6 +177,8 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
 <script src="script.js"></script>
+</div>
 </body>
 </html>
