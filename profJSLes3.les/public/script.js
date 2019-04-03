@@ -1,8 +1,15 @@
 const API_URL = "http://localhost:3000";
 
-$catalog = document.getElementById("catalog");
-$cart = document.getElementById("headerCart");
+const $catalog = document.getElementById("catalog");
+const $cart = document.getElementById("headerCart");
+const $searchButton = document.querySelector(".fa-search");
+const $searchText = document.querySelector(".headerSearch");
+let flag = true;
 
+$searchButton.addEventListener("click", () => {
+    items.filterItems($searchText.value);
+    items.render();
+});
 
 function sendRequest(url) {
     return fetch(url).then((response) => response.json());
@@ -50,16 +57,29 @@ class ItemsList extends Item {
     constructor() {
         super();
         this.items = [];
+        this.filteredItems = [];
     }
 
     fetchItems() {
         return sendRequest(`${API_URL}/products.json`).then((items) => {
             this.items = items.map(item => new Item(item.name, item.price, item.quantity, item.size, item.color));
+            this.filteredItems = this.items;
         });
     }
 
+    filterItems(query){//Метод для поиска
+        const regexp = new RegExp(query, 'i');
+        //alert(this.filteredItems);
+        this.filteredItems = this.items.filter((item) => regexp.test(item.name));
+        alert("filterItems " + this.filteredItems);
+    };
+
     render() {
-        this.items.forEach(item => $catalog.appendChild(super.render(item.name, item.price, item.quantity, item.size, item.color)));
+        console.log(this.filteredItems);
+        alert("render " + this.filteredItems);
+        this.filteredItems.forEach(item => $catalog.appendChild(super.render(item.name, item.price, item.quantity, item.size, item.color)));
+        //this.filteredItems.forEach(item => document.querySelector("#catalog").innerHTML += console.log(super.render(item.name, item.price, item.quantity, item.size, item.color) + ""));
+        alert("render 2 " + this.filteredItems);
         $cart.querySelector(".cartTotal").textContent = "Итого: " + items.total();//Выводим общюю Итого
     }
 
@@ -71,8 +91,13 @@ class ItemsList extends Item {
 }
 
 const items = new ItemsList();
+alert(flag);
+    items.fetchItems().then(() => {
+        alert("Start");
 
-items.fetchItems().then(() => {
-    items.render();
-});
+        items.render();
+    });
+    flag = false;
+    alert("flag 2 " + flag);
+
 
