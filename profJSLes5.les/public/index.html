@@ -19,8 +19,8 @@
                 Browse
                 <i class="fas fa-caret-down"></i>
             </div>
-            <input class="headerSearch" placeholder="Search for Item..." type="text">
-            <button @click="handleSearchClick">
+            <input v-model="searchQuery" class="headerSearch" placeholder="Search for Item..." type="text">
+            <button @lick="handleSearchClick">
                 <i class="fas fa-search"></i>
             </button>
         </form>
@@ -64,18 +64,18 @@
         <div class="product">
             <img src="images/product1.jpg" alt="">
             <div class="productDetails">
-                <h2 class="productName">{{item.name}}</h2>
+                <h2 class="productName">{{ item.name }}</h2>
                 <div class="productColor">
                     <span class="productParam">Color:</span>
-                    {{item.color}}
+                    {{ item.color }}
                 </div>
                 <div class="productSize">
                     <span class="productParam">Size:</span>
-                    {{item.size}}
+                    {{ item.size }}
                 </div>
             </div>
         </div>
-        <div class="productPrice">{{item.price}}</div>
+        <div class="productPrice">{{ item.price }}</div>
         <div class="productQty">
             <input class="productQuantity" type="text" value="1">
         </div>

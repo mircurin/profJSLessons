@@ -15,7 +15,16 @@ const app = new Vue({
     },
     methods: {
         handleSearchClick() {
+            const comp = this.searchQuery;
+            console.log(this.searchQuery);
+            return this.filteredItems.filter(function (elem) {
+                if(comp==='') return true;
+                else return elem.searchQuery.indexOf(comp) > -1;
+            });
 
         }
+    },
+    computed:{
+
     }
 });
