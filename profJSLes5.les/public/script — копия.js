@@ -6,6 +6,7 @@ const app = new Vue({
         searchQuery: "",
     },
     mounted() {
+        //debugger;
         fetch("http://localhost:3000/products")
             .then(response => response.json())
             .then((items) => {
@@ -15,6 +16,7 @@ const app = new Vue({
     },
     methods: {
         handleSearchClick() {
+            //debugger;
             const regexp = new RegExp(this.searchQuery, "i");
             this.filteredItems = this.items.filter((item) => regexp.test(item.name));
         }
