@@ -54,6 +54,10 @@
     <div class="container headerCart" id="headerCart">
         <button class="cart-button accountBtn" type="button">Корзина</button>
         <div class="cartTotal" id="cartTotal"></div>
+        <ul>
+            <li v-for="item in cart">{{ item.name }} ({{item.quantity}})<button @click="handleDeleteClick(item)">X</button></li>
+        </ul>
+        <div>Общая стоимость: {{total}}</div>
     </div>
     <!--**************************************************-->
     <div id="template">
@@ -76,7 +80,9 @@
             <div class="productQty">
                 <input class="productQuantity" type="text" value="1">
             </div>
-            <div class="productShipping">FREE</div>
+            <div class="productShipping">
+                <button @click="handleBuyClick(item)" class="cart-button accountBtn" type="button">Добавить</button>
+            </div>
             <div class="productSubtotal">$300</div>
             <div class="productAction">
                 <i class="fas fa-times-circle"></i>
