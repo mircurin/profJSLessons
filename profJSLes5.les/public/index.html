@@ -14,18 +14,18 @@
             <div class="logo">
                 BRAN<span>D</span>
             </div>
-            <!--<form class="searchWrap">-->
+            <form class="searchWrap">
                 <div class="searchBrowse">
                     Browse
                     <i class="fas fa-caret-down"></i>
                 </div>
             <input type="text" v-model="searchQuery" class="headerSearch" />
-            <button @click="handleSearchClick">
+            <button @click.prevent="handleSearchClick">
                 <i class="fas fa-search"></i>
             </button>
                 <!--<input type="text" v-model="searchQuery" class="headerSearch" />
                 <button class="search-button" @click="handleSearchClick">Поиск</button>-->
-            <!--</form>-->
+            </form>
             <div class="headerCartBtn">
                 <img class="headerCart" src="img/cart.png" alt="">
                 <button class="accountBtn">
