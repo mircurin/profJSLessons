@@ -1,21 +1,90 @@
 const API_URL = "http://localhost:3000";
 
-const app = new Vue({
-    el: "#app",
-    data: {
-        items: [],
-        filteredItems: [],
-        searchQuery: "",
-        cart: [],
+//Компонент для товара
+Vue.component("product-item", {
+    props: ["item"],//item приходит в компонетн из вне
+    template: `
+    <section class="item shoppingGridRow">
+            <div class="product">
+                <img src="images/product1.jpg" alt="">
+                <div class="productDetails">
+                    <h2 class="productName">{{ item.name }}</h2>
+                    <div class="productColor">
+                        <span class="productParam">Color:</span>
+                        {{ item.color }}
+                    </div>
+                    <div class="productSize">
+                        <span class="productParam">Size:</span>
+                        {{ item.size }}
+                    </div>
+                </div>
+            </div>
+            <div class="productPrice">{{ item.price }}</div>
+            <div class="productQty">
+                <input class="productQuantity" type="text" value="1">
+            </div>
+            <div class="productShipping">
+                <button @click="handleBuyClick(item)" class="cart-button accountBtn" type="button">Добавить</button>
+            </div>
+            <div class="productSubtotal">$300</div>
+            <div class="productAction">
+                <i class="fas fa-times-circle"></i>
+            </div>
+        </section>
+    `,
+    methods: {
+        handleBuyClick(item) {//слушает события
+            this.$emit("onbuy", item);//При нажатии на кнопку, бросаем событие
+        }
+    }
+});
+
+//Компонент для списка товаров
+Vue.component("products", {
+    props: ["query"],
+    //для компонента создали свое событие
+    template:`<div id="template">
+        <product-item v-for="entry in filteredItems" :item="entry" @onbuy=""></product-item>
+    </div>`,
+    methods: {
+        handleBuyClick(item) {//слушает события
+            this.$emit("onbuy", item);
+        }
+    },
+    data() {
+        return {
+            items: [],
+        };
+    },
+    computed: {
+        filteredItems() {
+            if(this.query){
+                const regexp = new RegExp(this.query, "i");
+                return this.items.filter((item) => regexp.test(item.name));
+            } else {
+                return this.items;
+            }
+        }
     },
     mounted() {
         fetch(`${API_URL}/products`)
             .then(response => response.json())
             .then((items) => {
+                //debugger
                 this.items = items;
-                this.filteredItems = items;
+                //this.filteredItems = items;
             });
+    }
+});
 
+const app = new Vue({
+    el: "#app",
+    data: {
+        filterValue: "",
+        searchQuery: "",
+        cart: [],
+    },
+    mounted() {
         fetch (`${API_URL}/cart`)
             .then(response =>response.json())
             .then((items) => {
@@ -59,8 +128,7 @@ const app = new Vue({
 
         },
         handleSearchClick() {
-            const regexp = new RegExp(this.searchQuery, "i");
-            this.filteredItems = this.items.filter((item) => regexp.test(item.name));
+            this.filterValue = this.searchQuery;
         },
         handleBuyClick(item) {
              const cartItem = this.cart.find((entry) => entry.id === item.id);
