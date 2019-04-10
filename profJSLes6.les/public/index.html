@@ -14,18 +14,7 @@
             <div class="logo">
                 BRAN<span>D</span>
             </div>
-            <form class="searchWrap">
-                <div class="searchBrowse">
-                    Browse
-                    <i class="fas fa-caret-down"></i>
-                </div>
-            <input type="text" v-model="searchQuery" class="headerSearch" />
-            <button @click.prevent="handleSearchClick">
-                <i class="fas fa-search"></i>
-            </button>
-                <!--<input type="text" v-model="searchQuery" class="headerSearch" />
-                <button class="search-button" @click="handleSearchClick">Поиск</button>-->
-            </form>
+            <search @onsearch="handleSearchClick"></search>
             <div class="headerCartBtn">
                 <img class="headerCart" src="img/cart.png" alt="">
                 <button class="accountBtn">
@@ -51,14 +40,15 @@
         </div>
     </div>
     <!--**************************************************-->
-    <div class="container headerCart" id="headerCart">
+    <cart :cart="cart" @delete="handleDeleteClick"></cart>
+    <!--<div class="container headerCart" id="headerCart">
         <button class="cart-button accountBtn" type="button">Корзина</button>
         <div class="cartTotal" id="cartTotal"></div>
         <ul>
             <li v-for="item in cart">{{ item.name }} ({{item.quantity}})<button @click="handleDeleteClick(item)">X</button></li>
         </ul>
         <div>Общая стоимость: {{total}}</div>
-    </div>
+    </div>-->
     <!--**************************************************-->
     <products :query="filterValue" @onbuy="handleBuyClick"></products>
     <!--**************************************************-->

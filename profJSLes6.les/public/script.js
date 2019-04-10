@@ -1,5 +1,29 @@
 const API_URL = "http://localhost:3000";
 
+//Компонент поиска
+Vue.component("search", {
+    template: `
+        <form class="searchWrap">
+                <div class="searchBrowse">
+                    Browse
+                    <i class="fas fa-caret-down"></i>
+                </div>
+                <input type="text" v-model="searchQuery" class="headerSearch" />
+                <button @click.prevent="handleSearchClick">
+                    <i class="fas fa-search"></i>
+                </button>
+        </form>`,
+    data(){
+        return {
+            searchQuery: "",
+        }
+    },
+    methods: {
+        handleSearchClick(){
+            this.$emit("onsearch", this.searchQuery);
+        }
+    }
+});
 //Компонент для товара
 Vue.component("product-item", {
     props: ["item"],//item приходит в компонетн из вне
@@ -38,13 +62,13 @@ Vue.component("product-item", {
         }
     }
 });
-
 //Компонент для списка товаров
 Vue.component("products", {
     props: ["query"],
     //для компонента создали свое событие
-    template:`<div id="template">
-        <product-item v-for="entry in filteredItems" :item="entry" @onbuy=""></product-item>
+    template:`
+    <div id="template">
+        <product-item v-for="entry in filteredItems" :item="entry" @onbuy="handleBuyClick"></product-item>
     </div>`,
     methods: {
         handleBuyClick(item) {//слушает события
@@ -72,16 +96,36 @@ Vue.component("products", {
             .then((items) => {
                 //debugger
                 this.items = items;
-                //this.filteredItems = items;
             });
     }
 });
-
+//Компонент корзина
+Vue.component("cart", {
+    props: ["cart"],
+    template: `
+    <div class="container headerCart" id="headerCart">
+        <button class="cart-button accountBtn" type="button">Корзина</button>
+        <div class="cartTotal" id="cartTotal"></div>
+        <ul>
+            <li v-for="item in cart">{{ item.name }} ({{item.quantity}})<button @click="handleDeleteClick(item)">X</button></li>
+        </ul>
+        <div>Общая стоимость: {{total}}</div>
+    </div>`,
+    computed: {
+        total(){
+            return this.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        }
+    },
+    methods: {
+        handleDeleteClick(item){
+            this.$emit("delete", item);
+        }
+    }
+});
 const app = new Vue({
     el: "#app",
     data: {
         filterValue: "",
-        searchQuery: "",
         cart: [],
     },
     mounted() {
@@ -90,11 +134,6 @@ const app = new Vue({
             .then((items) => {
                 this.cart = items;
             })
-    },
-    computed: {
-        total(){
-            return this.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        }
     },
     methods: {
         handleDeleteClick(item){
@@ -127,8 +166,8 @@ const app = new Vue({
             }
 
         },
-        handleSearchClick() {
-            this.filterValue = this.searchQuery;
+        handleSearchClick(query) {
+            this.filterValue = query;
         },
         handleBuyClick(item) {
              const cartItem = this.cart.find((entry) => entry.id === item.id);
