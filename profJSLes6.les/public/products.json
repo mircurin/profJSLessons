@@ -1,0 +1,6 @@
+[
+  { "name": "Shirt", "price": 150, "quantity": 2, "size": "L", "color": "redddd" },
+  { "name": "Socks", "price": 50, "quantity": 1, "size": "M", "color": "blue" },
+  { "name": "Jacket", "price": 350, "quantity": 2, "size": "XL", "color": "green" },
+  { "name": "Jacket", "price": 250, "quantity": 1, "size": "XXX", "color": "yellow" }
+]
