@@ -14,3 +14,4 @@ packegesImport/
 *.txt
 fontsStyle.css
 style.css
+node_modules/
