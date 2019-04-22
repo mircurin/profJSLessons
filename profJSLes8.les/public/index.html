@@ -41,7 +41,9 @@
         </div>
     </div>
     <!--**************************************************-->
-    <div class="container protuctsWrap">
+    <products :query="filterValue" @onbuy="handleBuyClick"></products>
+    <!--**************************************************-->
+    <!--<div class="container protuctsWrap">
         <div class="cartProduct">
             <div class="cartproductImag">
                 <div class="blackoutImageRelativ">
@@ -178,11 +180,11 @@
                 <span>$52.00</span>
             </div>
         </div>
-    </div>
+    </div>-->
     <!--**************************************************-->
     <cart :cart="cart" @delete="handleDeleteClick"></cart>
     <!--**************************************************-->
-    <products :query="filterValue" @onbuy="handleBuyClick"></products>
+   <!-- <products :query="filterValue" @onbuy="handleBuyClick"></products>-->
     <!--**************************************************-->
     <div class="bodySubscribe">
         <div class="container bodySubscribeContainer">

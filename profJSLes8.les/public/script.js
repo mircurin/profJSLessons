@@ -28,7 +28,7 @@ Vue.component("search", {
 Vue.component("product-item", {
     props: ["item"],//item приходит в компонетн из вне
     template: `
-    <section class="item shoppingGridRow">
+    <!--<section class="item shoppingGridRow">
             <div class="product">
                 <img src="images/product1.jpg" alt="">
                 <div class="productDetails">
@@ -54,7 +54,24 @@ Vue.component("product-item", {
             <div class="productAction">
                 <i class="fas fa-times-circle"></i>
             </div>
-        </section>
+        </section>-->
+        <div class="cartProduct">
+            <div class="cartproductImag">
+                <div class="blackoutImageRelativ">
+                    <div class="blackoutImage">
+                        <button @click="handleBuyClick(item)" class="buttomBlackout" type="button">
+                            <img src="img/cartBlackout.png" alt="">
+                            Добавить
+                        </button>
+                    </div>
+                    <img src="img/prod1.png" alt="">
+                </div>
+            </div>
+            <div class="descripProduct">
+                <div>{{ item.name }}</div>
+                <span>{{ item.price }}</span>
+            </div>
+        </div>
     `,
     methods: {
         handleBuyClick(item) {//слушает события
@@ -67,9 +84,13 @@ Vue.component("products", {
     props: ["query"],
     //для компонента создали свое событие
     template:`
-    <div id="template">
+    <!--<div id="template">
         <product-item v-for="entry in filteredItems" :item="entry" @onbuy="handleBuyClick"></product-item>
-    </div>`,
+    </div>-->
+    <div class="container protuctsWrap">
+        <product-item v-for="entry in filteredItems" :item="entry" @onbuy="handleBuyClick"></product-item>
+    </div>
+    `,
     methods: {
         handleBuyClick(item) {//слушает события
             this.$emit("onbuy", item);
