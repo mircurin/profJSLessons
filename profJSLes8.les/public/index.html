@@ -41,6 +41,8 @@
         </div>
     </div>
     <!--**************************************************-->
+    <cart :cart="cart" @delete="handleDeleteClick"></cart>
+    <!--**************************************************-->
     <products :query="filterValue" @onbuy="handleBuyClick"></products>
     <!--**************************************************-->
     <!--<div class="container protuctsWrap">
@@ -182,7 +184,7 @@
         </div>
     </div>-->
     <!--**************************************************-->
-    <cart :cart="cart" @delete="handleDeleteClick"></cart>
+
     <!--**************************************************-->
    <!-- <products :query="filterValue" @onbuy="handleBuyClick"></products>-->
     <!--**************************************************-->

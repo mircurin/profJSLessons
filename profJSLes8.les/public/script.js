@@ -26,35 +26,8 @@ Vue.component("search", {
 });
 //Компонент для товара
 Vue.component("product-item", {
-    props: ["item"],//item приходит в компонетн из вне
+    props: ["item"],//item приходит в компонент из вне
     template: `
-    <!--<section class="item shoppingGridRow">
-            <div class="product">
-                <img src="images/product1.jpg" alt="">
-                <div class="productDetails">
-                    <h2 class="productName">{{ item.name }}</h2>
-                    <div class="productColor">
-                        <span class="productParam">Color:</span>
-                        {{ item.color }}
-                    </div>
-                    <div class="productSize">
-                        <span class="productParam">Size:</span>
-                        {{ item.size }}
-                    </div>
-                </div>
-            </div>
-            <div class="productPrice">{{ item.price }}</div>
-            <div class="productQty">
-                <input class="productQuantity" type="text" value="1">
-            </div>
-            <div class="productShipping">
-                <button @click="handleBuyClick(item)" class="cart-button accountBtn" type="button">Добавить</button>
-            </div>
-            <div class="productSubtotal">$300</div>
-            <div class="productAction">
-                <i class="fas fa-times-circle"></i>
-            </div>
-        </section>-->
         <div class="cartProduct">
             <div class="cartproductImag">
                 <div class="blackoutImageRelativ">
@@ -64,7 +37,7 @@ Vue.component("product-item", {
                             Добавить
                         </button>
                     </div>
-                    <img src="img/prod1.png" alt="">
+                    <img v-bind:src="item.imgProduct">
                 </div>
             </div>
             <div class="descripProduct">
@@ -84,9 +57,6 @@ Vue.component("products", {
     props: ["query"],
     //для компонента создали свое событие
     template:`
-    <!--<div id="template">
-        <product-item v-for="entry in filteredItems" :item="entry" @onbuy="handleBuyClick"></product-item>
-    </div>-->
     <div class="container protuctsWrap">
         <product-item v-for="entry in filteredItems" :item="entry" @onbuy="handleBuyClick"></product-item>
     </div>
@@ -124,14 +94,46 @@ Vue.component("products", {
 Vue.component("cart", {
     props: ["cart"],
     template: `
+    <details>
+        <summary>
+            <button class="cart-button accountBtn" type="button">Корзина</button>
+            <div>Общая стоимость: {{total}}</div>
+        </summary>
+        
     <div class="container headerCart" id="headerCart">
-        <button class="cart-button accountBtn" type="button">Корзина</button>
-        <div class="cartTotal" id="cartTotal"></div>
+        
         <ul>
-            <li v-for="item in cart">{{ item.name }} ({{item.quantity}})<button @click="handleDeleteClick(item)">X</button></li>
+            <li v-for="item in cart">
+               <section class="item shoppingGridRow">
+                    <div class="product">
+                        <img v-bind:src="item.imgProduct" alt="">
+                        <div class="productDetails">
+                            <h2 class="productName">{{ item.name }}</h2>
+                            <div class="productColor">
+                                <span class="productParam">Color:</span>
+                                {{ item.color }}
+                            </div>
+                            <div class="productSize">
+                                <span class="productParam">Size:</span>
+                                {{ item.size }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="productPrice">{{ item.price }}</div>
+                    <div class="productQty">
+                        <input class="productQuantity" type="text" v-bind:value="item.quantity">
+                    </div>
+                    
+                    <div class="productSubtotal">{{item.price * item.quantity}}</div>
+                    <div class="productAction">
+                        <i class="fas fa-times-circle" @click="handleDeleteClick(item)"></i>
+                    </div>
+                </section>
+            </li>   
         </ul>
-        <div>Общая стоимость: {{total}}</div>
-    </div>`,
+    </div>
+    </details>
+    `,
     computed: {
         total(){
             return this.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);

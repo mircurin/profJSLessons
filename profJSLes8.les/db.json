@@ -39,36 +39,13 @@
   ],
   "cart": [
     {
-      "id": 1,
-      "name": "Shirt",
-      "price": 150,
-      "quantity": 16,
-      "size": "L",
-      "color": "redddd"
-    },
-    {
       "id": 2,
       "name": "Socks",
       "price": 50,
-      "quantity": 23,
+      "quantity": 2,
       "size": "M",
-      "color": "blue"
-    },
-    {
-      "id": 3,
-      "name": "Jacket",
-      "price": 350,
-      "quantity": 13,
-      "size": "XL",
-      "color": "green"
-    },
-    {
-      "id": 4,
-      "name": "Jacket",
-      "price": 250,
-      "quantity": 18,
-      "size": "XXX",
-      "color": "yellow"
+      "color": "blue",
+      "imgProduct": "img/prod2.png"
     }
   ]
 }
