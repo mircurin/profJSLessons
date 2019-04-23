@@ -39,10 +39,28 @@
   ],
   "cart": [
     {
+      "id": 4,
+      "name": "Jacket",
+      "price": 250,
+      "quantity": 6,
+      "size": "XXX",
+      "color": "yellow",
+      "imgProduct": "img/prod4.png"
+    },
+    {
+      "id": 1,
+      "name": "Shirt",
+      "price": 150,
+      "quantity": 4,
+      "size": "L",
+      "color": "redddd",
+      "imgProduct": "img/prod1.png"
+    },
+    {
       "id": 2,
       "name": "Socks",
       "price": 50,
-      "quantity": 2,
+      "quantity": 4,
       "size": "M",
       "color": "blue",
       "imgProduct": "img/prod2.png"

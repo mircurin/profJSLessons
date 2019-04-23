@@ -95,15 +95,13 @@ Vue.component("cart", {
     props: ["cart"],
     template: `
     <details>
-        <summary>
-            <button class="cart-button accountBtn" type="button">Корзина</button>
-            <div>Общая стоимость: {{total}}</div>
-        </summary>
-        
+        <summary class="cartTotal">
+            Общая стоимость: {{total}}
+        </summary>  
     <div class="container headerCart" id="headerCart">
-        
-        <ul>
-            <li v-for="item in cart">
+        <ul class="cartLi">
+            <!--<li v-for="item in cart">{{ item.name }} ({{item.quantity}})<button @click="handleDeleteClick(item)">X</button></li>-->
+            <li class="cartLi" v-for="item in cart">
                <section class="item shoppingGridRow">
                     <div class="product">
                         <img v-bind:src="item.imgProduct" alt="">
